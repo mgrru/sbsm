@@ -52,13 +52,69 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public boolean addServant(Master master, Servant servant) {
+    public boolean buyServant(Master master, List<Servant> servantPool) {
+        Integer sq = master.getSq();
+
+        Integer price = 3;
+
+        sq -= price;
+
+        if (sq < 0) {
+            return false;
+        }
+
+        List<Servant> servants = master.getServants();
+
+        int min = 1;
+        int max = servantPool.size();
+        int randomNumber = (int) (Math.random() * ((max - min) + 1)) + min;
+        Servant servant = servantPool.get(randomNumber);
+
+        servants.add(servant);
+        master.setServants(servants);
+
         return iMaster.addServant(master, servant) > 0;
     }
 
     @Override
-    public boolean sellServant(Integer sid) {
-        return iMaster.deleteServant(sid) > 0;
+    public boolean buyTenServant(Master master, List<Servant> servantPool) {
+        if (master.getSq() < 30) {
+            return false;
+        }
+        for (int i = 0; i < 10; i++) {
+            buyServant(master, servantPool);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean sellServant(Master master, Integer sid) {
+        Integer sq = master.getSq();
+
+        Servant servant = iMaster.getServantBySid(sid);
+
+        Integer price = 0;
+        switch (servant.getStar()) {
+            case 5:
+                price = 2;
+                break;
+            case 4:
+                price = 1;
+                break;
+            default:
+                price = 0;
+                break;
+        }
+        
+
+        if (iMaster.deleteServant(sid) > 0) {
+            sq += price;
+            master.setSq(sq);
+            iMaster.updateMaster(master);
+            return true;
+        }
+
+        return false;
     }
 
 }

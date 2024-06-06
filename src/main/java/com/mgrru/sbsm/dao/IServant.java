@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import com.mgrru.sbsm.entity.Servant;
 
+import com.mgrru.sbsm.entity.Servant;
 
 @Mapper
 public interface IServant {

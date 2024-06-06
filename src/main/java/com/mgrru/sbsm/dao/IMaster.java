@@ -37,13 +37,15 @@ public interface IMaster {
     @Select("select s.*,shadow.id as sid from servant s join shadow on s.id=shadow.sid where shadow.mid=#{mid}")
     List<Shadow> getServants(Integer mid);
 
+    /**
+     * 查找特定的影子从者
+     */
+    @Select("select s2.*,s1.id as sid from shadow s1 join servant s2 on s2.id=s1.sid where s1.id=#{sid}")
+    Shadow getServantBySid(Integer sid);
+
     @Insert("insert into shadow(sid,mid) values(#{servant.id},#{master.id})")
     int addServant(Master master, Servant servant);
 
-    /**
-     * 删除影子
-     * @param id 影子的sid
-     */
-    @Delete("delete from shadow where id=#{id}")
-    int deleteServant(Integer id);
+    @Delete("delete from shadow where id=#{sid}")
+    int deleteServant(Integer sid);
 }

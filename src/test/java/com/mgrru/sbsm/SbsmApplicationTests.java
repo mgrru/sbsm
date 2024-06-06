@@ -8,6 +8,7 @@ class SbsmApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("你好你好mgrru");
 	}
 
 }

@@ -36,15 +36,17 @@ public interface MasterService {
     List<Servant> getServants(Integer mid);
 
     /**
-     * 添加影子
+     * 购买影子
      */
-    boolean addServant(Master master, Servant servant);
-    
+    boolean buyServant(Master master, List<Servant> servantPool);
+
+    boolean buyTenServant(Master master, List<Servant> servantPool);
+
     /**
      * 出售影子
      * 
      * @param sid 影子的sid
      */
-    boolean sellServant(Integer sid);
+    boolean sellServant(Master master, Integer sid);
 
 }
