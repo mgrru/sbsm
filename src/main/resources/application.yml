@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: sbsm
+  datasource:
+    url: jdbc:mysql://localhost:3306/tt
+    username: root
+    password: 123
+    druid:
+      initial-size: 1
+      max-active: 20
+      min-idle: 1
+      max-wait: 10000
+server:
+  port: 9901
+  servlet:
+    context-path: /sbsm
