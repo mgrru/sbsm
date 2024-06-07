@@ -11,6 +11,8 @@ public interface MasterService {
      */
     boolean registerMaster(Master master);
 
+    String login(Integer id,String password);
+
     /**
      * 查询御主信息
      */

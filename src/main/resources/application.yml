@@ -1,3 +1,6 @@
+# Conversion to YAML from Properties formar report
+# Warnings:
+# - The yaml file had comments which are lost in the refactoring!
 spring:
   application:
     name: sbsm
@@ -14,3 +17,8 @@ server:
   port: 9901
   servlet:
     context-path: /sbsm
+jwt:
+  header: "Authorization" #token返回头部
+  tokenPrefix: "Bearer " #token前缀
+  secret: "mgrru-secret" #密钥
+  exp: 10800000 #毫秒

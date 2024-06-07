@@ -8,21 +8,43 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mgrru.sbsm.anno.LoginValidate;
 import com.mgrru.sbsm.dao.IMaster;
+import com.mgrru.sbsm.entity.JwtUtil;
 import com.mgrru.sbsm.entity.Master;
 import com.mgrru.sbsm.entity.Servant;
 import com.mgrru.sbsm.service.MasterService;
 
 @Service
 @Transactional(rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
+@LoginValidate
 public class MasterServiceImpl implements MasterService {
 
     @Autowired
     private IMaster iMaster;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @Override
     public boolean registerMaster(Master master) {
         return iMaster.addMaster(master) > 0;
+    }
+
+    /**
+     * 登录功能
+     * 
+     * @return 返回token或者错误信息
+     */
+    @Override
+    @LoginValidate(validate = false)
+    public String login(Integer id, String password) {
+        Master master = iMaster.getMasterById(id);
+        if (master != null && master.getPassword().equals(password)) {
+            return jwtUtil.generateToken(String.valueOf(id));
+        } else {
+            return "用户不存在或密码不正确!";
+        }
     }
 
     @Override
@@ -105,7 +127,6 @@ public class MasterServiceImpl implements MasterService {
                 price = 0;
                 break;
         }
-        
 
         if (iMaster.deleteServant(sid) > 0) {
             sq += price;
