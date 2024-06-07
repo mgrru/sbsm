@@ -1,6 +1,5 @@
 package com.mgrru.sbsm.web;
 
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson2.JSON;
@@ -13,10 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("master")
+@LoginValidate
 public class MasterController {
     @Autowired
     private MasterService masterService;
+
+    @PostMapping("hello")
+    public String hello(@RequestBody String json) {
+        return JSON.parse(json).toString();
+    }
 
     @PostMapping("login")
     @LoginValidate(validate = false)
@@ -28,8 +32,4 @@ public class MasterController {
         return result;
     }
 
-    @PostMapping("hello")
-    public String hello(@RequestBody String json) {
-        return JSON.parse(json).toString();
-    }
 }
