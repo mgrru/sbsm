@@ -15,37 +15,36 @@ import com.mgrru.sbsm.anno.LoginValidate;
 import com.mgrru.sbsm.entity.JwtUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
 @Aspect
 @Component
 @Async
+@Slf4j
 public class LoginAspect {
 
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Around("@annotation(com.mgrru.sbsm.anno.LoginValidate)")
+    @Around("@annotation(com.mgrru.sbsm.anno.LoginValidate) || @within(com.mgrru.sbsm.anno.LoginValidate)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         LoginValidate loginValidate = method.getAnnotation(LoginValidate.class);
 
         if (loginValidate != null && !loginValidate.validate()) {
+            log.error("不验证token");
             return joinPoint.proceed(joinPoint.getArgs());
         }
 
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes();
-        if (requestAttributes == null || requestAttributes.getResponse() == null) {
-            return joinPoint.proceed(joinPoint.getArgs());
-        }
-
-        HttpServletRequest req = requestAttributes.getRequest();
+        HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                .getRequest();
         String token = req.getHeader("Authorization");
         if (jwtUtil.validateToken(token)) {
+            log.info("token验证通过");
             return joinPoint.proceed(joinPoint.getArgs());
         } else {
+            log.error("验证失败!");
             return "登录验证失败,请重新登录!";
         }
-
     }
 }
