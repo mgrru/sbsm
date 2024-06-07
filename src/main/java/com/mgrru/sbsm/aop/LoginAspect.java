@@ -2,8 +2,8 @@ package com.mgrru.sbsm.aop;
 
 import java.lang.reflect.Method;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -24,12 +24,12 @@ public class LoginAspect {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Before("@annotation(com.mgrru.sbsm.anno.LoginValidate)")
+    @Around("@annotation(com.mgrru.sbsm.anno.LoginValidate)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         LoginValidate loginValidate = method.getAnnotation(LoginValidate.class);
 
-        if (loginValidate != null && loginValidate.validate()) {
+        if (loginValidate != null && !loginValidate.validate()) {
             return joinPoint.proceed(joinPoint.getArgs());
         }
 

@@ -37,7 +37,6 @@ public class MasterServiceImpl implements MasterService {
      * @return 返回token或者错误信息
      */
     @Override
-    @LoginValidate(validate = false)
     public String login(Integer id, String password) {
         Master master = iMaster.getMasterById(id);
         if (master != null && master.getPassword().equals(password)) {
