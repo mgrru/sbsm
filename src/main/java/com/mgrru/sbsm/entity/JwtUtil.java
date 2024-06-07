@@ -39,4 +39,16 @@ public class JwtUtil {
             return false;
         }
     }
+
+    public Integer getLoginMasterId(String token){
+        try{
+            String id= JWT.require(Algorithm.HMAC512(secret))
+                .build()
+                .verify(token.replace(tokenPrefix, ""))
+                .getSubject();
+            return Integer.valueOf(id);
+        }catch(Exception e){
+            return null;
+        }
+    }
 }
