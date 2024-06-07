@@ -32,7 +32,7 @@ public class LoginAspect {
         LoginValidate loginValidate = method.getAnnotation(LoginValidate.class);
 
         if (loginValidate != null && !loginValidate.validate()) {
-            log.error("不验证token");
+            log.info("不验证token");
             return joinPoint.proceed(joinPoint.getArgs());
         }
 
@@ -40,7 +40,7 @@ public class LoginAspect {
                 .getRequest();
         String token = req.getHeader("Authorization");
         if (jwtUtil.validateToken(token)) {
-            log.info("token验证通过");
+            log.info("验证通过token:" + token);
             return joinPoint.proceed(joinPoint.getArgs());
         } else {
             log.error("验证失败!");
