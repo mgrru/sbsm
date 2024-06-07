@@ -14,6 +14,11 @@ public interface MasterService {
     String login(Integer id,String password);
 
     /**
+     * 充值
+     */
+    String recharge(Master master,Integer rmb);
+
+    /**
      * 查询御主信息
      */
     Master getMaster(Integer id);

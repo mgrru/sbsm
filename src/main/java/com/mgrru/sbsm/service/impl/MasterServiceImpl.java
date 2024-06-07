@@ -45,6 +45,36 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
+    public String recharge(Master master, Integer rmb) {
+        Integer sq = master.getSq();
+        switch (rmb) {
+            case 6:
+                sq += 1;
+                break;
+            case 25:
+                sq += 5;
+                break;
+            case 78:
+                sq += 18;
+                break;
+            case 158:
+                sq += 41;
+                break;
+            case 258:
+                sq += 99;
+                break;
+            case 518:
+                sq += 221;
+                break;
+            default:
+                return "充值错误!!!";
+        }
+        master.setSq(sq);
+        iMaster.updateMaster(master);
+        return "充值成功!";
+    }
+
+    @Override
     @Transactional(readOnly = false)
     public Master getMaster(Integer id) {
         return iMaster.getMasterById(id);
