@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mgrru.sbsm.anno.LoginValidate;
 import com.mgrru.sbsm.dao.IMaster;
 import com.mgrru.sbsm.entity.JwtUtil;
 import com.mgrru.sbsm.entity.Master;
@@ -17,7 +16,6 @@ import com.mgrru.sbsm.service.MasterService;
 
 @Service
 @Transactional(rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
-@LoginValidate
 public class MasterServiceImpl implements MasterService {
 
     @Autowired
