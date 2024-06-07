@@ -47,8 +47,9 @@ public class MasterController {
     @LoginValidate(validate = false)
     public String register(@RequestBody String json) {
         Master master = JSON.parseObject(json, Master.class);
+        master.setSq(0);
         if (masterService.registerMaster(master)) {
-            return "注册成功!";
+            return "注册成功!\n您的账号id为 " + master.getId() + "\n请保存好您的id和密码，因为这将是您登录的唯一凭证!";
         } else {
             return "用户已存在!";
         }
@@ -64,7 +65,7 @@ public class MasterController {
         Master master = masterService.getMaster(id);
 
         Integer rmb = JSON.parseObject(json).getInteger("rmb");
-        log.info("rmb:"+rmb);
+        log.info("rmb:" + rmb);
         String res = masterService.recharge(master, rmb);
 
         return res;
