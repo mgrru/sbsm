@@ -65,7 +65,7 @@ public class MasterController {
         Master master = masterService.getMaster(id);
 
         Integer rmb = JSON.parseObject(json).getInteger("rmb");
-        log.info("rmb:" + rmb);
+        log.info("充值rmb:" + rmb);
         String res = masterService.recharge(master, rmb);
 
         return res;
