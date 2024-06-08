@@ -82,6 +82,13 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public boolean updateMaster(Master master) {
+        Master m1 = iMaster.getMasterById(master.getId());
+        if (master.getName() == null) {
+            master.setName(m1.getName());
+        }
+        if (master.getPassword() == null) {
+            master.setPassword(m1.getPassword());
+        }
         return iMaster.updateMaster(master) > 0;
     }
 
