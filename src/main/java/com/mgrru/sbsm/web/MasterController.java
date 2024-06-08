@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Slf4j
 @RestController
@@ -69,6 +70,31 @@ public class MasterController {
         String res = masterService.recharge(master, rmb);
 
         return res;
+    }
+
+    @GetMapping("/master/profile")
+    public String profile() {
+        HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                .getRequest();
+        String token = req.getHeader("Authorization");
+        Integer id = jwtUtil.getLoginMasterId(token);
+        Master master = masterService.getMaster(id);
+        master.setServants(masterService.getServants(id));
+
+        String json = JSON.toJSONString(master);
+
+        return json;
+    }
+
+    @PostMapping("/master/update")
+    public String updateMaster(@RequestBody String json) {
+        Master master = JSON.parseObject(json, Master.class);
+        if (masterService.updateMaster(master)) {
+            return "修改成功!";
+        } else {
+            return "修改失败!";
+        }
+
     }
 
 }
