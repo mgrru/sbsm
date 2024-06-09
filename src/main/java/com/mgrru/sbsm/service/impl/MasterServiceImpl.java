@@ -35,6 +35,7 @@ public class MasterServiceImpl implements MasterService {
      * @return 返回token或者错误信息
      */
     @Override
+    @Transactional(readOnly = true)
     public String login(Integer id, String password) {
         Master master = iMaster.getMasterById(id);
         if (master != null && master.getPassword().equals(password)) {
@@ -75,7 +76,7 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = true)
     public Master getMaster(Integer id) {
         return iMaster.getMasterById(id);
     }
@@ -98,7 +99,7 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = true)
     public List<Servant> getServants(Integer mid) {
         List<Servant> servants = new ArrayList<>();
         for (Servant servant : iMaster.getServants(mid)) {
@@ -144,30 +145,35 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public boolean sellServant(Master master, Integer sid) {
+    public boolean sellServant(Master master, List<Integer> sidList) {
         Integer sq = master.getSq();
-
-        Servant servant = iMaster.getServantBySid(sid);
-
-        Integer price = 0;
-        switch (servant.getStar()) {
-            case 5:
-                price = 2;
-                break;
-            case 4:
-                price = 1;
-                break;
-            default:
-                price = 0;
-                break;
-        }
-
-        if (iMaster.deleteServant(sid) > 0) {
-            sq += price;
+        if (sidList != null) {
+            for (Integer sid : sidList) {
+                Servant servant = iMaster.getServantBySid(sid);
+    
+                Integer price = 0;
+                switch (servant.getStar()) {
+                    case 5:
+                        price = 2;
+                        break;
+                    case 4:
+                        price = 1;
+                        break;
+                    default:
+                        price = 0;
+                        break;
+                }
+        
+                if (iMaster.deleteServant(sid) > 0) {
+                    sq += price;
+                }
+            }
+    
             master.setSq(sq);
             iMaster.updateMaster(master);
             return true;
         }
+
 
         return false;
     }

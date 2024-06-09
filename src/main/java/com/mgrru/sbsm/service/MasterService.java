@@ -54,6 +54,6 @@ public interface MasterService {
      * 
      * @param sid 影子的sid
      */
-    boolean sellServant(Master master, Integer sid);
+    boolean sellServant(Master master, List<Integer> sidList);
 
 }
