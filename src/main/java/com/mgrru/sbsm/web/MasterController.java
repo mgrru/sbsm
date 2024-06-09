@@ -9,10 +9,13 @@ import com.alibaba.fastjson2.JSONObject;
 import com.mgrru.sbsm.anno.LoginValidate;
 import com.mgrru.sbsm.entity.JwtUtil;
 import com.mgrru.sbsm.entity.Master;
+import com.mgrru.sbsm.entity.Servant;
 import com.mgrru.sbsm.service.MasterService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,6 +98,19 @@ public class MasterController {
             return "修改失败!";
         }
 
+    }
+
+    @GetMapping("/master/servants")
+    public String getservant() {
+        HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                .getRequest();
+        String token = req.getHeader("Authorization");
+        Integer id = jwtUtil.getLoginMasterId(token);
+
+        List<Servant> servants = masterService.getServants(id);
+        String res = JSON.toJSONString(servants);
+        log.info("res:" + res);
+        return res;
     }
 
 }
