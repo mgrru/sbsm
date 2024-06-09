@@ -109,8 +109,23 @@ public class MasterController {
 
         List<Servant> servants = masterService.getServants(id);
         String res = JSON.toJSONString(servants);
-        log.info("res:" + res);
         return res;
+    }
+
+    @PostMapping("/master/sell")
+    public String sellServant(@RequestBody String json) {
+        HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                .getRequest();
+        String token = req.getHeader("Authorization");
+        Integer id = jwtUtil.getLoginMasterId(token);
+        Master master = masterService.getMaster(id);
+
+        List<Integer> servantsList = JSON.parseArray(json, Integer.class);
+
+        if(masterService.sellServant(master, servantsList)){
+            return "变还成功!";
+        }
+        return "变还失败!";
     }
 
 }
