@@ -6,13 +6,13 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.mgrru.sbsm.entity.Master;
 import com.mgrru.sbsm.entity.Servant;
 import com.mgrru.sbsm.entity.Shadow;
-
 
 @Mapper
 public interface IMaster {
@@ -31,6 +31,7 @@ public interface IMaster {
 
     /**
      * 查询影子
+     * 
      * @param mid 御主的id
      * @return 返回影子的集合
      */
@@ -43,8 +44,9 @@ public interface IMaster {
     @Select("select s2.*,s1.id as sid from shadow s1 join servant s2 on s2.id=s1.sid where s1.id=#{sid}")
     Shadow getServantBySid(Integer sid);
 
-    @Insert("insert into shadow(sid,mid) values(#{servant.id},#{master.id})")
-    int addServant(Master master, Servant servant);
+    @Insert("insert into shadow(id,sid,mid) values(#{shadow.sid},#{servant.id},#{master.id})")
+    @Options(useGeneratedKeys = true, keyProperty = "shadow.sid")
+    int addServant(@Param("master") Master master, @Param("servant") Servant servant, @Param("shadow") Shadow shadow);
 
     @Delete("delete from shadow where id=#{sid}")
     int deleteServant(Integer sid);

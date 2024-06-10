@@ -11,6 +11,7 @@ import com.mgrru.sbsm.entity.JwtUtil;
 import com.mgrru.sbsm.entity.Master;
 import com.mgrru.sbsm.entity.Servant;
 import com.mgrru.sbsm.service.MasterService;
+import com.mgrru.sbsm.service.ServantService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,9 @@ public class MasterController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private ServantService servantService;
 
     @PostMapping("hello")
     public String hello(@RequestBody String json) {
@@ -122,10 +126,43 @@ public class MasterController {
 
         List<Integer> servantsList = JSON.parseArray(json, Integer.class);
 
-        if(masterService.sellServant(master, servantsList)){
+        if (masterService.sellServant(master, servantsList)) {
             return "变还成功!";
         }
         return "变还失败!";
+    }
+
+    @PostMapping("/master/summoning")
+    public String summoning(@RequestBody String num) {
+        JSONObject obj = JSONObject.parseObject(num);
+        Integer number = obj.getInteger("num");
+
+        HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                .getRequest();
+        String token = req.getHeader("Authorization");
+        Integer id = jwtUtil.getLoginMasterId(token);
+        Master master = masterService.getMaster(id);
+
+        List<Servant> servantPool = servantService.getAllServant();
+
+        switch (number) {
+            case 1:
+                if (master.getSq() < 3) {
+                    return "圣晶石不足!";
+                } else {
+                    List<Servant> summoningServants = masterService.summoingOneServant(master, servantPool);
+                    return JSON.toJSONString(summoningServants);
+                }
+            case 11:
+                if (master.getSq() < 30) {
+                    return "圣晶石不足!";
+                } else {
+                    List<Servant> summoningServants = masterService.summoingTenServant(master, servantPool);
+                    return JSON.toJSONString(summoningServants);
+                }
+            default:
+                return "操作异常，请重新登录!";
+        }
     }
 
 }

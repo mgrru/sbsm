@@ -45,9 +45,9 @@ public interface MasterService {
     /**
      * 购买影子
      */
-    boolean buyServant(Master master, List<Servant> servantPool);
+    List<Servant> summoingOneServant(Master master, List<Servant> servantPool);
 
-    boolean buyTenServant(Master master, List<Servant> servantPool);
+    List<Servant> summoingTenServant(Master master, List<Servant> servantPool);
 
     /**
      * 出售影子

@@ -17,6 +17,10 @@ public interface IServant {
     @Select("select * from servant")
     List<Servant> getAllServants();
 
+    @Select("select * from servant where star=#{star}")
+    List<Servant> getServantsByStar(Integer star);
+
+
     @Insert("insert into servant(star,name) values(#{star},#{name})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int addServant(Servant servant);

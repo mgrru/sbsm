@@ -12,6 +12,7 @@ import com.mgrru.sbsm.dao.IMaster;
 import com.mgrru.sbsm.entity.JwtUtil;
 import com.mgrru.sbsm.entity.Master;
 import com.mgrru.sbsm.entity.Servant;
+import com.mgrru.sbsm.entity.Shadow;
 import com.mgrru.sbsm.service.MasterService;
 
 @Service
@@ -23,6 +24,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Autowired
     private JwtUtil jwtUtil;
+
 
     @Override
     public boolean registerMaster(Master master) {
@@ -109,39 +111,43 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public boolean buyServant(Master master, List<Servant> servantPool) {
+    public List<Servant> summoingOneServant(Master master, List<Servant> servantPool) {
+        // 获取原有圣晶石数量
         Integer sq = master.getSq();
 
-        Integer price = 3;
+        // 设定抽取消耗圣晶石数量
+        final Integer price = 3;
 
-        sq -= price;
+        // 获取抽取记录
+        List<Servant> summoningServants = new ArrayList<>();
 
-        if (sq < 0) {
-            return false;
-        }
-
-        List<Servant> servants = master.getServants();
-
-        int min = 1;
-        int max = servantPool.size();
+        // 随机抽取从者
+        int min = 0;
+        int max = servantPool.size() - 1;
         int randomNumber = (int) (Math.random() * ((max - min) + 1)) + min;
         Servant servant = servantPool.get(randomNumber);
 
-        servants.add(servant);
-        master.setServants(servants);
+        // 抽取成功后扣除圣晶石数量
+        sq -= price;
+        master.setSq(sq);
+        iMaster.updateMaster(master);
 
-        return iMaster.addServant(master, servant) > 0;
+        // 添加抽取到的从者
+        Shadow shadow = new Shadow(servant, null);
+        iMaster.addServant(master, servant, shadow);
+
+        // 添加成功后返回抽取结果
+        summoningServants.add(shadow);
+        return summoningServants;
     }
 
     @Override
-    public boolean buyTenServant(Master master, List<Servant> servantPool) {
-        if (master.getSq() < 30) {
-            return false;
+    public List<Servant> summoingTenServant(Master master, List<Servant> servantPool) {
+        List<Servant> summoningServants = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            summoningServants.add(summoingOneServant(master, servantPool).getFirst());
         }
-        for (int i = 0; i < 10; i++) {
-            buyServant(master, servantPool);
-        }
-        return true;
+        return summoningServants;
     }
 
     @Override
@@ -150,7 +156,7 @@ public class MasterServiceImpl implements MasterService {
         if (sidList != null) {
             for (Integer sid : sidList) {
                 Servant servant = iMaster.getServantBySid(sid);
-    
+
                 Integer price = 0;
                 switch (servant.getStar()) {
                     case 5:
@@ -163,17 +169,16 @@ public class MasterServiceImpl implements MasterService {
                         price = 0;
                         break;
                 }
-        
+
                 if (iMaster.deleteServant(sid) > 0) {
                     sq += price;
                 }
             }
-    
+
             master.setSq(sq);
             iMaster.updateMaster(master);
             return true;
         }
-
 
         return false;
     }

@@ -14,4 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Shadow extends Servant {
     private Integer sid;
+    public Shadow(Servant servant,Integer sid){
+        super(servant.id,servant.star,servant.name);
+        this.sid = sid;
+    }
 }
