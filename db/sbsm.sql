@@ -16,6 +16,7 @@
 
 
 -- 导出 sbsm 的数据库结构
+DROP DATABASE IF EXISTS `sbsm`;
 CREATE DATABASE IF NOT EXISTS `sbsm` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `sbsm`;
 
@@ -27,14 +28,20 @@ CREATE TABLE IF NOT EXISTS `master` (
   `password` varchar(50) NOT NULL DEFAULT '123',
   `sq` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  sbsm.master 的数据：~4 rows (大约)
-INSERT IGNORE INTO `master` (`id`, `name`, `password`, `sq`) VALUES
-	(1, '御主', '123', 0),
+-- 正在导出表  sbsm.master 的数据：~9 rows (大约)
+DELETE FROM `master`;
+INSERT INTO `master` (`id`, `name`, `password`, `sq`) VALUES
+	(1, '御主', '123', 999),
 	(2, '御主2', '1234', 9),
 	(3, '御主3', '1231', 99),
-	(4, '御主4', '1232', 999);
+	(4, '御主4', '1232', 999),
+	(5, '芙芙', '123', 0),
+	(6, '芙宁娜', '123', 0),
+	(7, '芙宁娜', '123', 0),
+	(8, '芙宁娜', '123', 0),
+	(9, '芙宁娜', '123', 0);
 
 -- 导出  表 sbsm.servant 结构
 DROP TABLE IF EXISTS `servant`;
@@ -43,14 +50,44 @@ CREATE TABLE IF NOT EXISTS `servant` (
   `star` int unsigned NOT NULL DEFAULT '5',
   `name` varchar(50) NOT NULL DEFAULT '玛修',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  sbsm.servant 的数据：~4 rows (大约)
-INSERT IGNORE INTO `servant` (`id`, `star`, `name`) VALUES
+-- 正在导出表  sbsm.servant 的数据：~33 rows (大约)
+DELETE FROM `servant`;
+INSERT INTO `servant` (`id`, `star`, `name`) VALUES
 	(1, 4, '玛修'),
 	(2, 5, '贞德'),
-	(3, 5, '弓贞'),
-	(4, 5, '闪闪');
+	(3, 5, '梅柳齐娜'),
+	(4, 5, '吉尔伽美什'),
+	(5, 5, '贞德[Alter]'),
+	(6, 5, 'BB'),
+	(7, 4, '阿塔兰忒'),
+	(8, 4, '织田信长'),
+	(9, 4, '哈贝特洛特'),
+	(10, 4, '斯露德'),
+	(11, 4, '壹与'),
+	(12, 4, '九纹龙伊丽莎'),
+	(13, 4, '迷之偶像X[Alter]'),
+	(14, 3, '贝德维尔'),
+	(15, 3, '尤瑞艾莉'),
+	(16, 3, '亚历山大'),
+	(17, 3, '豹人'),
+	(18, 3, '罗穆路斯'),
+	(19, 3, '大流士三世'),
+	(20, 2, '陈宫'),
+	(21, 2, '加雷斯'),
+	(22, 2, '列奥尼达一世'),
+	(23, 2, '咒腕哈桑'),
+	(24, 2, '安徒生'),
+	(25, 2, '黑胡子'),
+	(26, 2, '莎乐美'),
+	(27, 1, '伊阿宋'),
+	(28, 1, '阿拉什'),
+	(29, 1, '莫扎特'),
+	(30, 1, '夏洛蒂·科黛'),
+	(31, 1, '玛塔·哈丽'),
+	(32, 1, '斯巴达克斯'),
+	(33, 1, '织田信胜');
 
 -- 导出  表 sbsm.shadow 结构
 DROP TABLE IF EXISTS `shadow`;
@@ -63,20 +100,10 @@ CREATE TABLE IF NOT EXISTS `shadow` (
   KEY `FK__master` (`mid`),
   CONSTRAINT `FK__master` FOREIGN KEY (`mid`) REFERENCES `master` (`id`),
   CONSTRAINT `FK__servant` FOREIGN KEY (`sid`) REFERENCES `servant` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  sbsm.shadow 的数据：~10 rows (大约)
-INSERT IGNORE INTO `shadow` (`id`, `sid`, `mid`) VALUES
-	(1, 1, 1),
-	(2, 3, 1),
-	(3, 4, 1),
-	(4, 2, 2),
-	(5, 4, 1),
-	(6, 4, 1),
-	(7, 3, 1),
-	(8, 3, 1),
-	(9, 2, 1),
-	(10, 3, 2);
+-- 正在导出表  sbsm.shadow 的数据：~0 rows (大约)
+DELETE FROM `shadow`;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
