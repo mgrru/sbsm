@@ -1,0 +1,42 @@
+{"properties": [
+  {
+    "name": "jwt.header",
+    "type": "java.lang.String",
+    "description": "token返回头部"
+  },
+  {
+    "name": "jwt.tokenPrefix",
+    "type": "java.lang.String",
+    "description": "token前缀"
+  },
+  {
+    "name": "jwt.secret",
+    "type": "java.lang.String",
+    "description": "token密钥"
+  },
+  {
+    "name": "jwt.exp",
+    "type": "java.lang.Integer",
+    "description": "token有效期 单位毫秒"
+  },
+  {
+    "name": "spring.datasource.druid.initial-size",
+    "type": "java.lang.Integer",
+    "description": "初始化连接池数量"
+  },
+  {
+    "name": "spring.datasource.druid.max-active",
+    "type": "java.lang.Integer",
+    "description": "最大连接池数量"
+  },
+  {
+    "name": "spring.datasource.druid.max-wait",
+    "type": "java.lang.Integer",
+    "description": "最大空闲时间"
+  },
+  {
+    "name": "spring.datasource.druid.min-idle",
+    "type": "java.lang.Integer",
+    "description": "最小连接池数量"
+  }
+]}

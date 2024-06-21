@@ -18,7 +18,7 @@ server:
   servlet:
     context-path: /sbsm
 jwt:
-  header: "Authorization" #token返回头部
-  tokenPrefix: "Bearer " #token前缀
-  secret: "mgrru-secret" #token密钥
-  exp: 10800000 #token有效期 单位毫秒  -- 3小时
+  header: "Authorization"
+  tokenPrefix: "Bearer "
+  secret: "mgrru-secret"
+  exp: 10800000 #3小时
