@@ -6,7 +6,7 @@ services:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     volumes:
-      - ..:/workspace:cached
+      - ..:/workspace/sbsm:cached
     ports:
       - "9901:9901"
     depends_on:
