@@ -19,7 +19,7 @@
 			"installOhMyZsh": true,
 			"installOhMyZshConfig": true,
 			"upgradePackages": true,
-			"username": "root",
+			"username": "none",
 			"userUid": "1001",
 			"userGid": "1001"
 		},
@@ -29,6 +29,14 @@
 		},
 		"ghcr.io/devcontainers/features/sshd:1": {
 			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"moby": true,
+			"azureDnsAutoDetection": true,
+			"installDockerBuildx": true,
+			"installDockerComposeSwitch": true,
+			"version": "latest",
+			"dockerDashComposeVersion": "latest"
 		}
 	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
