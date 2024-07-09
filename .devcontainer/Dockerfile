@@ -1,5 +1,5 @@
-ARG VARIANT=21-bullseye
-FROM mcr.microsoft.com/devcontainers/java:1-${VARIANT}
+ARG VARIANT=21
+FROM eclipse-temurin:${VARIANT}
 WORKDIR /workspace/sbsm
 COPY . .
 EXPOSE 9901
