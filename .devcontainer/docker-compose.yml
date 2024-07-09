@@ -16,7 +16,7 @@ services:
     command: /bin/bash -c "while sleep 1000; do :; done"
 
   mysql:
-    image: ghcr.io/mgrru/mysql:lts
+    image: m.daocloud.io/docker.io/library/mysql:lts
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=123
