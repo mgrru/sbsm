@@ -5,4 +5,3 @@ COPY . /sbsm
 WORKDIR /sbsm
 
 EXPOSE 9901
-EXPOSE 3306
