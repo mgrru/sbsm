@@ -7,7 +7,7 @@
 
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "sbsm",
-	"workspaceFolder": "/workspace",
+	"workspaceFolder": "/workspace/sbsm",
 
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {
