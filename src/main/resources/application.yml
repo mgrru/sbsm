@@ -5,14 +5,15 @@ spring:
   application:
     name: sbsm
   datasource:
-    url: jdbc:mysql://localhost:3306/sbsm
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sbsm?useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123
-    druid:
-      initial-size: 1
-      max-active: 20
-      min-idle: 1
-      max-wait: 10000
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 10000
+      minimum-idle: 5
+      maximum-pool-size: 20
 server:
   port: 9901
   servlet:
@@ -22,3 +23,6 @@ jwt:
   tokenPrefix: "Bearer "
   secret: "mgrru-secret"
   exp: 10800000 #3小时
+logging:
+  level:
+    web: DEBUG

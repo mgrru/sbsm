@@ -1,5 +1,5 @@
-ARG VARIANT=21
-FROM eclipse-temurin:${VARIANT}
+ARG VARIANT=3.9.8-eclipse-temurin-21
+FROM maven:${VARIANT}
 
-COPY . /sbsm
+COPY .. /sbsm
 WORKDIR /sbsm

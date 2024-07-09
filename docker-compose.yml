@@ -1,23 +1,25 @@
-version: '1.0'
+version: '3'
 
 services:
+
   sbsm:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
-      - .:/sbsm:cached
+      - .:/sbsm
     ports:
       - 9901:9901
     depends_on:
       - mysql
+
   mysql:
     image: mysql:lts
-    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 123
-      MYSQL_USER: mru
-      MYSQL_PASSWORD: 123
+      - MYSQL_ROOT_PASSWORD=123
+      - TZ=Asia/Shanghai
     ports:
       - 3306:3306
     volumes:

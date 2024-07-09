@@ -6,9 +6,9 @@
 	// "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
 	"build": {
 		"dockerfile": "Dockerfile",
-		"context": "..",
+		"context": ".",
 		"args": {
-			"VARIANT": "21"
+			"VARIANT": "3.9.8-eclipse-temurin-21"
 		}
 	},
 	"workspaceFolder": "/sbsm",
@@ -54,7 +54,8 @@
 				"vscjava.vscode-spring-initializr",
 				"vscjava.vscode-java-test",
 				"rangav.vscode-thunder-client",
-				"DotJoshJohnson.xml"
+				"DotJoshJohnson.xml",
+				"vscjava.vscode-maven"
 			]
 		}
 	}
