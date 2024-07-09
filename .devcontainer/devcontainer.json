@@ -19,7 +19,7 @@
 			"installOhMyZsh": true,
 			"installOhMyZshConfig": true,
 			"upgradePackages": true,
-			"username": "root",
+			"username": "codespace",
 			"userUid": "1001",
 			"userGid": "1001"
 		},
