@@ -3,24 +3,23 @@ version: '1.0'
 services:
   sbsm:
     build:
-      context: ..
-      dockerfile: .devcontainer/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ..:/workspace:cached
+      - .:/sbsm:cached
     ports:
-      - "9901:9901"
+      - 9901:9901
     depends_on:
       - mysql
-
   mysql:
-    image: ghcr.io/mgrru/mysql:lts
+    image: mysql:lts
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_USER: mru
-      MYSQL_PASSWORD: 1234
+      MYSQL_PASSWORD: 123
     ports:
-      - "3306:3306"
+      - 3306:3306
     volumes:
       - mysql:/var/lib/mysql
 

@@ -4,24 +4,22 @@
 	"name": "sbsm",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	// "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
-
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "sbsm",
-	"workspaceFolder": "/workspace",
-
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": "..",
+		"args": {
+			"VARIANT": "21"
+		}
+	},
+	"workspaceFolder": "/sbsm",
 	"features": {
-		"ghcr.io/devcontainers/features/java:1": {
-			"version": "none",
-			"installMaven": "true",
-			"installGradle": "false"
-		},
 		"ghcr.io/devcontainers/features/common-utils:2": {
 			"installZsh": true,
 			"configureZshAsDefaultShell": true,
 			"installOhMyZsh": true,
 			"installOhMyZshConfig": true,
 			"upgradePackages": true,
-			"username": "codespace",
+			"username": "root",
 			"userUid": "1001",
 			"userGid": "1001"
 		},
@@ -33,13 +31,10 @@
 			"version": "latest"
 		}
 	},
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "java -version",
-
+	// "postCreateCommand": "java -version",
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
@@ -54,8 +49,7 @@
 				"DotJoshJohnson.xml"
 			]
 		}
-	},
-
+	}
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	"remoteUser": "codespace"
+	// "remoteUser": "codespace"
 }
