@@ -11,6 +11,8 @@ services:
       - 9901:9901
     depends_on:
       - mysql
+    command: sleep infinity
+    network_mode: service:mysql
 
   mysql:
     image: m.daocloud.io/docker.io/library/mysql:lts
