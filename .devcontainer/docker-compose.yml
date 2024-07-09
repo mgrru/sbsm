@@ -11,6 +11,7 @@ services:
       - "9901:9901"
     depends_on:
       - mysql
+    command: sleep infinity
 
   mysql:
     image: ghcr.io/mgrru/mysql:lts
