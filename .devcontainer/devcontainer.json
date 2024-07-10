@@ -55,7 +55,8 @@
 				"vscjava.vscode-java-test",
 				"rangav.vscode-thunder-client",
 				"DotJoshJohnson.xml",
-				"vscjava.vscode-maven"
+				"vscjava.vscode-maven",
+				"mhutchie.git-graph"
 			]
 		}
 	}
