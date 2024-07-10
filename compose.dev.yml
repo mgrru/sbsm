@@ -1,30 +1,33 @@
-version: '3'
+version: '3.8'
 
 services:
 
   sbsm:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     environment:
       - TZ=Asia/Shanghai
     volumes:
       - .:/sbsm
-    ports:
-      - 9901:9901
+    # ports:
+    #   - 9901:9901
     depends_on:
       - mysql
+    network_mode: host
+    
 
   mysql:
     image: mysql:lts
     environment:
       - MYSQL_ROOT_PASSWORD=123
       - TZ=Asia/Shanghai
-    ports:
-      - 3306:3306
+    # ports:
+    #   - 3306:3306
     volumes:
       - mysql:/var/lib/mysql
       - ./db:/docker-entrypoint-initdb.d
+    network_mode: host
 
 volumes:
   mysql:
